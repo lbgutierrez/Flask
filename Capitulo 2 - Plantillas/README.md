@@ -97,10 +97,12 @@ Lista de filtros disponibles en Jinja2
 - striptags: Elimina cualquier etiqueta HTML del valor antes de renderizar
 ```
 
+```
+Nota: 
+
 Jinja2 escapa todas las variables por motivo de seguridad, esto quiere decir que si la variable tiene como valor un extracto de codigo html como por ejemplo <h1>Hello World!</h1>, Jinja2 lo trasformará como &lt;h1&gt;Hello World!&lt;/h1&gt;. Es por esto que el filtro safe es de utilidad cuando queremos que Jinja2 no escape el valor de una variable.
 
-```
-Nota: nunca utilices safe en variables que sean ingresadas por medio de formularios de usuarios.
+nunca utilices safe en variables que sean ingresadas por medio de formularios de usuarios.
 ```
 
 ## Sentencias para control de flujo
