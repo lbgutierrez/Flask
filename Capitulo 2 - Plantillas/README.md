@@ -102,3 +102,116 @@ Jinja2 escapa todas las variables por motivo de seguridad, esto quiere decir que
 ```
 Nota: nunca utilices safe en variables que sean ingresadas por medio de formularios de usuarios.
 ```
+
+## Sentencias para control de flujo
+inja2 ofrece varias estructuras de control que pueden usarse para alterar el flujo de la plantilla, dentro de ellas encontramos los siguientes ejemplos:
+
+### Condiciones
+```
+Permite condicionar un segmento del html, ver ejemplo:
+
+{% if user %}
+    Hello, {{ user }}!
+{% else %}
+    Hello, Stranger!
+{% endif %}
+```
+
+### Ciclos
+```
+Permite iterar un arreglo de datos, tal como se muestra en este ejemplo:
+
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment }}</li>
+    {% endfor %}
+</ul>
+```
+
+### Macros
+```
+Son similares a una función, que genera código HTML reutilizable.
+
+{% macro render_comment(comment) %}
+    <li>{{ comment }}</li>
+{% endmacro %}
+
+<ul>
+    {% for comment in comments %}
+        {{ render_comment(comment) }}
+    {% endfor %}
+</ul>
+
+Las macros pueden ser mas reutilizables si los incorporamos dentro de un archivo separado, como por ejemplo:
+
+{% import 'macros.html' as macros %}
+<ul>
+    {% for comment in comments %}
+        {{ macros.render_comment(comment) }}
+    {% endfor %}
+</ul>
+```
+
+### Herencia
+```
+Podemos crear la estructura general de nuestra pagina en un archivo denominado base.html, que contendrá algo como lo siguiente:
+
+<html>
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - My Application</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
+
+Luego podemos extender el archivo base.html e implementarlo de la siguiente forma:
+
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+    </style>
+{% endblock %}
+{% block body %}
+<h1>Hello, World!</h1>
+{% endblock %}
+
+En esta implementacion, podrás ver la sentencia {% extends "base.html" %} que indica cual es la plantilla/template padre. Por otra parte se hace llamada a {{ super() }} para hacer referencia a los contenidos del bloque de la plantilla base.html
+```
+
+## Páginas de error personalizadas
+
+Para poder capturar los errores producidos por el servidor, puedes implementar el decorador @app.errorhandler de la siguiente manera
+
+```
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+```
+
+## Enlaces
+
+Flask proporciona la url_for()función auxiliar, que genera URL a partir de la información almacenada en el mapa de URL de la aplicación. La forma de implementar esta funcion es de la siguiente manera:
+
+```
+url_for('index')
+    devuelve: /
+
+url_for('index', _external=True)
+    devuelve: http://localhost:5000/
+
+url_for('hello_name', name='luis', _external=True)
+    devuelve: http://localhost:5000/user/luis
+
+url_for('hello_name', name='luis', page=2, version=1)
+    devuelve: /user/luis?page=2&version=1
+```
