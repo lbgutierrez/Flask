@@ -1,12 +1,12 @@
-#Tutorial Flask - Apuntes
+# Tutorial Flask - Apuntes
 
 Los siguientes apuntes tienen como objetivo explicar conceptos relacionados con el Framework Flask, donde podrás acudir de forma inmediata si necesitas aclarar alguna duda. 
 
 Cabe señalar que estos apuntes no son equivalentes a la documentación oficial de Flask, por lo que siempre podrás acudir a ella desde su sitio oficial.
 
-##Capitulo 1 - Hello World!
+## Capitulo 1 - Hello World!
 
-###Rutas
+### Rutas
 
 ```
 Permiten asociar una URL con la lógica de presentación de la página solicitada.
@@ -27,7 +27,7 @@ Otra forma de definir una ruta es por medio del método app.add_url_rule, que en
 		app.add_url_rule( '/', 'index', index )
 ```
 
-###Rutas dinámicas
+### Rutas dinámicas
 
 ```
 Tienen el mismo propósito que una ruta convencional, sin embargo se diferencia de esta debido a que cuenta con secciones variables que pueden ser recibidas como parámetros en la función de la vista, por ejemplo la página de facebook https://www.facebook.com/<user-name>, donde <user-name> corresponde al nombre de usuario del perfil que se quiere ver.
@@ -40,7 +40,7 @@ Tienen el mismo propósito que una ruta convencional, sin embargo se diferencia 
 Por defecto las variables de la URL dinámica son de tipo string, pero también podemos cambiar el tipo, definiendo en la ruta la siguiente url /user/<int:id>
 ```
 
-###Servidor de desarrollo
+### Servidor de desarrollo
 
 ```
 Por defecto, Flask incorpora un servidor de desarrollo para arrancar nuestra aplicación, para ello, el framework provee el comando <b>flask run</b> para su ejecución. Este comando buscará el script de python que contiene la aplicación y para poder encontrarlo, utiliza la variable de entorno FLASK_APP para encontrarla.
@@ -52,7 +52,7 @@ Por defecto, Flask incorpora un servidor de desarrollo para arrancar nuestra apl
 Para ver la aplicación en funcionamiento, debes ingresar a la URL http://localhost:5000/ y para detener el servidor, basta con presionar CTRL + C en la consola.
 ```
 
-###Modo depuración
+### Modo depuración
 
 ```
 Cuando activamos el modo de depuración, se activan dos factores útiles para el desarrollador, el primero consiste en el Reloader, encargado de monitorear si ocurren cambios en los archivos, de esta manera reinicia el servidor de forma automática. Por otra parte, el Debug permite visualizar una excepción no controlada a través del navegador web.
@@ -65,7 +65,7 @@ Ej:
 	> flask run
 ```
 
-###Contextos de aplicación y solicitud
+### Contextos de aplicación y solicitud
 
 ```
 1. Contexto de aplicación
@@ -79,7 +79,7 @@ Ej:
 	- session: Corresponde a un diccionario que almacena valores que persisten en cada request.
 ```
 
-###Revisar rutas de la aplicación
+### Revisar rutas de la aplicación
 ```
 Si queremos ver el mapa de rutas que se elabora en la aplicación, debemos ingresar a la consola de Python y ejecutar la siguiente:
 
@@ -88,7 +88,7 @@ Si queremos ver el mapa de rutas que se elabora en la aplicación, debemos ingre
 	>>> app.url_map
 ```
 
-###Atributos del objeto request
+### Atributos del objeto request
 
 ```
 	- form: Un diccionario con todos los campos de formulario enviados con la solicitud.
@@ -134,7 +134,7 @@ Si queremos ver el mapa de rutas que se elabora en la aplicación, debemos ingre
 	- environ: El diccionario de entorno WSGI sin procesar para la solicitud.
 ```
 
-###Request Hooks
+### Request Hooks
 
 ```
 Los hooks permiten ejecutar codigo antes y despues de que se realiza una peticion, esto es util cuando queremos registrar informacion en un log, abrir y cerrar una conexion de base de datos, etc.
@@ -150,7 +150,7 @@ Flask provee cuatro hooks compatibles:
 	- teardown_request: Registra una función para ejecutar después de cada solicitud, incluso si se produjeron excepciones no controladas.
 ```
 
-###Response
+### Response
 
 ```
 Como se ha visto en ejemplos anteriores, las respuestas se han basado en cadenas de texto (String), sin embargo, podemos devolver tuplas en la cual devolvamos un codigo de respuesta distinto al estado 200 (estado ok).
@@ -190,7 +190,7 @@ Los atributos del objeto response, son los siguientes:
 	- get_data(): Obtiene el cuerpo de respuesta
 ```
 
-###Redirect
+### Redirect
 
 ```
 Un redirect es un tipo especial de respuesta, que se utiliza por lo general al recibir peticiones de formulario. El código de estado de respuesta es el 302, sin embargo el Framework Flask proporciona una función redirect() para este propósito.
@@ -203,7 +203,7 @@ Un redirect es un tipo especial de respuesta, que se utiliza por lo general al r
 			return redirect('http://www.example.com')
 ```
 		
-###Abort
+### Abort
 
 ```
 Es otra respuesta especial es la generada por la función abort(), que se utiliza para el manejo de errores.
@@ -221,9 +221,9 @@ Es otra respuesta especial es la generada por la función abort(), que se utiliz
 Ten en cuenta que abort()no devuelve el control a la función porque genera una excepción.
 ```
 
-##Capitulo 2 - Plantillas
+## Capitulo 2 - Plantillas
 
-###Renderizado de plantillas
+### Renderizado de plantillas
 
 Crear una nueva carpeta dentro de la raíz del proyecto denominada templates y dentro de ella crear el archivo index.html. Por defecto Flask buscará las plantillas dentro de dicha carpeta.
 
@@ -250,7 +250,7 @@ def index():
 
 Finalmente arrancamos el servidor y accedemos a la pagina http://127.0.0.1:5000/ para visualizar los cambios. 
 
-###Variables
+### Variables
 
 Para ver como pasar variables a una plantilla, crearemos una nueva pagina que reciba el nombre de un usuario desde una nueva url y la muestre por pantalla.
 
@@ -281,7 +281,7 @@ otras formas de pasar parametros son las siguientes:
 
 Finalmente arrancamos el servidor y accedemos a la página http://127.0.0.1:5000/hello/nombre para visualizar los cambios.
 
-###Filtros de variables
+### Filtros de variables
 
 Las variables se pueden modificar con filtros, que se agregan despues de la variable, separados por un caracter pipe (|), por ejemplo:
 
@@ -315,10 +315,10 @@ Jinja2 escapa todas las variables por motivo de seguridad, esto quiere decir que
 nunca utilices safe en variables que sean ingresadas por medio de formularios de usuarios.
 ```
 
-###Sentencias para control de flujo
+### Sentencias para control de flujo
 inja2 ofrece varias estructuras de control que pueden usarse para alterar el flujo de la plantilla, dentro de ellas encontramos los siguientes ejemplos:
 
-####Condiciones
+#### Condiciones
 ```
 Permite condicionar un segmento del html, ver ejemplo:
 
@@ -329,7 +329,7 @@ Permite condicionar un segmento del html, ver ejemplo:
 {% endif %}
 ```
 
-####Ciclos
+#### Ciclos
 ```
 Permite iterar un arreglo de datos, tal como se muestra en este ejemplo:
 
@@ -340,7 +340,7 @@ Permite iterar un arreglo de datos, tal como se muestra en este ejemplo:
 </ul>
 ```
 
-####Macros
+#### Macros
 ```
 Son similares a una función, que genera código HTML reutilizable.
 
@@ -364,7 +364,7 @@ Las macros pueden ser mas reutilizables si los incorporamos dentro de un archivo
 </ul>
 ```
 
-####Herencia
+#### Herencia
 ```
 Podemos crear la estructura general de nuestra pagina en un archivo denominado base.html, que contendrá algo como lo siguiente:
 
@@ -396,7 +396,7 @@ Luego podemos extender el archivo base.html e implementarlo de la siguiente form
 En esta implementacion, podrás ver la sentencia {% extends "base.html" %} que indica cual es la plantilla/template padre. Por otra parte se hace llamada a {{ super() }} para hacer referencia a los contenidos del bloque de la plantilla base.html
 ```
 
-###Páginas de error personalizadas
+### Páginas de error personalizadas
 
 Para poder capturar los errores producidos por el servidor, puedes implementar el decorador @app.errorhandler de la siguiente manera
 
@@ -410,7 +410,7 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 ```
 
-###Enlaces
+### Enlaces
 
 Flask proporciona la url_for()función auxiliar, que genera URL a partir de la información almacenada en el mapa de URL de la aplicación. La forma de implementar esta funcion es de la siguiente manera:
 
