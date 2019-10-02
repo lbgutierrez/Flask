@@ -70,3 +70,35 @@ otras formas de pasar parametros son las siguientes:
 ```
 
 Finalmente arrancamos el servidor y accedemos a la página http://127.0.0.1:5000/hello/nombre para visualizar los cambios.
+
+## Filtros de variables
+
+Las variables se pueden modificar con filtros, que se agregan despues de la variable, separados por un caracter pipe (|), por ejemplo:
+
+```
+<h1>Hello {{name | capitalize}}</h1>
+```
+
+Lista de filtros disponibles en Jinja2
+
+```
+- safe: Representa el valor sin aplicar escape
+
+- capitalize: Convierte el primer carácter del valor en mayúsculas y el resto en minúsculas.
+
+- lower: Convierte el valor en minúsculas
+
+- upper: Convierte el valor en mayúsculas
+
+- title: Capitaliza cada palabra en el valor
+
+- trim: Elimina los espacios en blanco iniciales y finales del valor
+
+- striptags: Elimina cualquier etiqueta HTML del valor antes de renderizar
+```
+
+Jinja2 escapa todas las variables por motivo de seguridad, esto quiere decir que si la variable tiene como valor un extracto de codigo html como por ejemplo <h1>Hello World!</h1>, Jinja2 lo trasformará como &lt;h1&gt;Hello World!&lt;/h1&gt;. Es por esto que el filtro safe es de utilidad cuando queremos que Jinja2 no escape el valor de una variable.
+
+```
+Nota: nunca utilices safe en variables que sean ingresadas por medio de formularios de usuarios.
+```
